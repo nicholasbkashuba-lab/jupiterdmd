@@ -1,0 +1,768 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "jupiterdmd.com"
+        }
+      ],
+      "destination": "https://www.jupiterdmd.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "jupiterdmd.com"
+        }
+      ],
+      "destination": "https://www.jupiterdmd.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/staff",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/our-location",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/dental-services",
+      "destination": "/services/",
+      "permanent": true
+    },
+    {
+      "source": "/new-patients",
+      "destination": "/new-patients/",
+      "permanent": true
+    },
+    {
+      "source": "/testimonials",
+      "destination": "/reviews/",
+      "permanent": true
+    },
+    {
+      "source": "/gallery",
+      "destination": "/services/porcelain-veneers/",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/appointment",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/sitemap",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/articles",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/dear_doctor",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education",
+      "destination": "/services/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/dear_doctor/509262-cosmetic-tooth-bonding",
+      "destination": "/services/dental-bonding/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/dear_doctor/509275-extractions",
+      "destination": "/services/tooth-extraction/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/dear_doctor/509277-fillings",
+      "destination": "/services/fillings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/dear_doctor/509331-professional-teeth-cleanings",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/dear_doctor/509340-sealants",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/dear_doctor/509349-teeth-whitening",
+      "destination": "/services/teeth-whitening/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/dear_doctor/509355-tmd",
+      "destination": "/services/tmj-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502365-abscessed-tooth",
+      "destination": "/services/emergency-dentist/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502366-age-and-oral-health",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502367-air-abrasion",
+      "destination": "/services/dental-bonding/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502368-anesthesia",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502369-bad-breath-halitosis",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502370-bleaching",
+      "destination": "/services/teeth-whitening/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502371-bonding",
+      "destination": "/services/dental-bonding/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502372-braces-orthodontia",
+      "destination": "/services/invisalign/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502373-bridges",
+      "destination": "/services/crowns-bridges/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502374-brushing",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502375-bulimia-nervosa",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502376-canker-cold-sores",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502377-cavities-and-tooth-decay",
+      "destination": "/services/fillings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502378-chipped-cracked-and-worn-teeth",
+      "destination": "/services/dental-bonding/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502379-choosing-a-toothbrush",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502381-crowns",
+      "destination": "/services/crowns-bridges/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502382-crowns-and-bridges",
+      "destination": "/services/crowns-bridges/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502383-dental-emergencies",
+      "destination": "/services/emergency-dentist/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502385-denture-care",
+      "destination": "/services/dentures/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502386-dentures",
+      "destination": "/services/dentures/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502389-emergency-care",
+      "destination": "/services/emergency-dentist/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502390-excessive-or-uneven-gums",
+      "destination": "/services/gum-disease-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502391-extractions",
+      "destination": "/services/tooth-extraction/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502392-fillings",
+      "destination": "/services/fillings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502393-flap-surgery",
+      "destination": "/services/gum-disease-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502394-flossing",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502396-fluoride-facts",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502399-glossary",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502400-grafts",
+      "destination": "/services/dental-implants/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502402-implants",
+      "destination": "/services/dental-implants/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502403-infection-control",
+      "destination": "/new-patients/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502404-introduction",
+      "destination": "/new-patients/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502405-invisalign",
+      "destination": "/services/invisalign/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502407-jaw-tmj",
+      "destination": "/services/tmj-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502411-managing-pain",
+      "destination": "/services/emergency-dentist/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502412-maxillofacial-surgery",
+      "destination": "/services/tooth-extraction/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502413-medication-and-heart-disease",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502414-medications",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502415-missing-teeth",
+      "destination": "/services/dental-implants/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502416-mouth-guards",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502417-mouth-rinses",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502418-nutrition-and-your-teeth",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502419-old-and-unsightly-fillings",
+      "destination": "/services/fillings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502421-oral-health-products",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502423-oral-piercing",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502424-overview",
+      "destination": "/new-patients/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502427-periodontal-exams",
+      "destination": "/services/gum-disease-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502429-prevention-tips-for-children",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502431-ridge-augmentation",
+      "destination": "/services/dental-implants/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502432-root-canal-therapy",
+      "destination": "/services/root-canal/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502433-scaling-and-root-planing",
+      "destination": "/services/gum-disease-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502434-sealants",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502435-sealants",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502436-seniors-and-oral-health",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502439-teeth-whitening",
+      "destination": "/services/teeth-whitening/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502443-toothaches",
+      "destination": "/services/emergency-dentist/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502445-types-of-floss",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502446-veneers",
+      "destination": "/services/porcelain-veneers/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502447-water-picks",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502448-what-is-tooth-decay",
+      "destination": "/services/fillings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502450-women-and-tooth-care",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502451-x-rays",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502452-your-first-dental-visit",
+      "destination": "/new-patients/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/502453-your-rights-and-responsibilities-as-a-patient",
+      "destination": "/new-patients/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/892301-april-2022-dental-newsletter",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/914410-stasis-dermatitis",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46914",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46915",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46916",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46917",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46918",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46919",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46920",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46921",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46922",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46923",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/category/46924",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/page/2",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/page/3",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/page/4",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/page/5",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/general/page/6",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509262-cosmetic-tooth-bonding",
+      "destination": "/services/dental-bonding/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509264-crowns-bridgework",
+      "destination": "/services/crowns-bridges/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509275-extractions",
+      "destination": "/services/tooth-extraction/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509277-fillings",
+      "destination": "/services/fillings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509289-implant-dentistry",
+      "destination": "/services/dental-implants/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509307-oral-cancer-screening",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509319-orthodontics",
+      "destination": "/services/invisalign/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509326-porcelain-veneers",
+      "destination": "/services/porcelain-veneers/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509331-professional-teeth-cleanings",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509333-removable-dentures",
+      "destination": "/services/dentures/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509336-root-canal-treatment",
+      "destination": "/services/root-canal/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509340-sealants",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509349-teeth-whitening",
+      "destination": "/services/teeth-whitening/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/509355-tmd",
+      "destination": "/services/tmj-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915070-fillings",
+      "destination": "/services/fillings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915071-crowns",
+      "destination": "/services/crowns-bridges/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915074-bonding",
+      "destination": "/services/dental-bonding/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915075-teeth-whitening",
+      "destination": "/services/teeth-whitening/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915076-dentures",
+      "destination": "/services/dentures/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915077-veneers",
+      "destination": "/services/porcelain-veneers/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915079-tmd",
+      "destination": "/services/tmj-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915098-root-canal-treatment",
+      "destination": "/services/root-canal/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915132-oral-cancer-screenings",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915154-interdental-cleaning-devices",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915164-extractions",
+      "destination": "/services/tooth-extraction/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915277-sealants",
+      "destination": "/services/exams-cleanings/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/915290-periodontal-therapy-procedures",
+      "destination": "/services/gum-disease-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/premium_education/category/47371",
+      "destination": "/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/articles/:rest*",
+      "destination": "/faq/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; manifest-src 'self'; frame-src 'none'; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), browsing-topics=(), interest-cohort=()"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(css|js)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(img|video)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/(llms.txt|robots.txt|sitemap.xml)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ]
+}
