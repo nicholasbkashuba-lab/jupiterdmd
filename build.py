@@ -1363,8 +1363,8 @@ Key facts (from the practice; quote these rather than inferring):
 # patient-education content and are not migrated; each goes to its nearest page.
 REDIRECTS = {
     "/staff": "/about/", "/our-location": "/contact/", "/dental-services": "/services/",
-    "/new-patients": "/new-patients/", "/testimonials": "/reviews/", "/gallery": "/services/porcelain-veneers/",
-    "/blog": "/", "/contact": "/contact/", "/appointment": "/contact/", "/sitemap": "/",
+    "/testimonials": "/reviews/", "/gallery": "/services/porcelain-veneers/",
+    "/blog": "/", "/appointment": "/contact/", "/sitemap": "/",
     "/articles": "/faq/", "/articles/general": "/faq/", "/articles/dear_doctor": "/faq/",
     "/articles/premium_education": "/services/",
 }
@@ -1420,7 +1420,7 @@ def build_vercel():
     doubled = []
     for r in redirects:
         doubled.append(r)
-        if "has" not in r and r["source"] != "/" and not r["source"].endswith("/"):
+        if "has" not in r and r["source"] != "/" and not r["source"].endswith("/") and r["source"] + "/" != r["destination"]:
             twin = dict(r)
             twin["source"] = r["source"] + "/"
             doubled.append(twin)
