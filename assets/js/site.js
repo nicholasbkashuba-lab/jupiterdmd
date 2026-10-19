@@ -173,7 +173,7 @@
   /* Live Google reviews: rendered only when /api/reviews has data (GOOGLE_PLACES_API_KEY set). */
   var slots = $$("[data-greviews]");
   if (slots.length && window.fetch) {
-    fetch("/api/reviews", { headers: { accept: "application/json" } }).then(function (r) {
+    fetch("/api/reviews/", { headers: { accept: "application/json" } }).then(function (r) {
       return r.ok && r.status === 200 ? r.json() : null;
     }).then(function (d) {
       if (!d || !d.rating) return;

@@ -1415,6 +1415,16 @@ def build_vercel():
         seen.add(src)
     # Anything else under the old article tree (pagination, categories, unseen articles).
     redirects.append({"source": "/articles/:rest*", "destination": "/faq/", "permanent": True})
+    # trailingSlash:true appends "/" before custom redirects run, so every path rule needs a
+    # slash-terminated twin or /staff becomes /staff/ and 404s. Keep the bare form for one-hop redirects.
+    doubled = []
+    for r in redirects:
+        doubled.append(r)
+        if "has" not in r and r["source"] != "/" and not r["source"].endswith("/"):
+            twin = dict(r)
+            twin["source"] = r["source"] + "/"
+            doubled.append(twin)
+    redirects = doubled
     csp = ("default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'%s; "
            "script-src 'self' %s%s; style-src 'self' 'unsafe-inline'; img-src 'self' data:%s; media-src 'self'; "
            "font-src 'self'; connect-src 'self'%s; manifest-src 'self'; frame-src 'none'; upgrade-insecure-requests"

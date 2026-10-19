@@ -17,7 +17,7 @@ function matchRedirect(p) {
 http.createServer((req, res) => {
   const u = new URL(req.url, "http://x");
   let p = decodeURIComponent(u.pathname);
-  if (p === "/api/reviews") { res.writeHead(204); return res.end(); }
+  if (p === "/api/reviews" || p === "/api/reviews/") { res.writeHead(204); return res.end(); }
   const red = matchRedirect(p);
   if (red && red !== p) { res.writeHead(308, { Location: red }); return res.end(); }
   let f = path.join(ROOT, p);
