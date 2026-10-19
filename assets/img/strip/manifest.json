@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "jupiter-coastline-beach-surf",
+    "w": 960,
+    "h": 640,
+    "alt": "Beach and breaking surf running north from Jupiter Inlet toward distant high-rise buildings, seen from above at sunset",
+    "t": 3.0
+  },
+  {
+    "slug": "jupiter-inlet-jetty-tip-waves",
+    "w": 960,
+    "h": 1200,
+    "alt": "The curved end of a rock jetty at Jupiter Inlet with waves wrapping around it, seen from above",
+    "t": 4.0
+  },
+  {
+    "slug": "jupiter-inlet-beach-wave-curve",
+    "w": 960,
+    "h": 640,
+    "alt": "A curving sandy beach and low waves inside the Jupiter Inlet jetty, with trees and shrubs behind, at dusk",
+    "t": 6.0
+  },
+  {
+    "slug": "jupiter-inlet-channel-between-jetties",
+    "w": 960,
+    "h": 1200,
+    "alt": "The Jupiter Inlet channel running between two rock jetties toward the river and a sunset sky",
+    "t": 9.0
+  },
+  {
+    "slug": "jupiter-inlet-shoreline-trees-lagoon",
+    "w": 960,
+    "h": 640,
+    "alt": "Trees, footpaths and a small lagoon on the shore beside Jupiter Inlet, seen from above in evening light",
+    "t": 12.0
+  },
+  {
+    "slug": "jupiter-inlet-waterfront-homes",
+    "w": 960,
+    "h": 1200,
+    "alt": "Waterfront homes, a sandy beach and a rock jetty on the north side of Jupiter Inlet at dusk",
+    "t": 15.0
+  },
+  {
+    "slug": "loxahatchee-river-sun-glint",
+    "w": 960,
+    "h": 1200,
+    "alt": "The setting sun reflecting off the water as the Loxahatchee River runs out through Jupiter Inlet",
+    "t": 18.0
+  },
+  {
+    "slug": "jupiter-sunset-sky-river-bend",
+    "w": 960,
+    "h": 640,
+    "alt": "A sunset sky over the river, bridges and wooded shoreline west of Jupiter Inlet, with the red Jupiter Inlet Lighthouse in the distance",
+    "t": 6.5
+  }
+]
