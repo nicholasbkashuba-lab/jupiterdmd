@@ -12,7 +12,9 @@ const paths = [...sm.matchAll(/<loc>https:\/\/www\.jupiterdmd\.com([^<]*)<\/loc>
 const WIDTHS = [[375, 812], [768, 1024], [1440, 900]];
 const schemes = (process.env.SCHEMES || "light").split(",");
 (async () => {
-  const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
+  // Remote URLs go through the environment's proxy when one is set (Playwright ignores HTTPS_PROXY otherwise).
+  const proxy = BASE.startsWith("https") && process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined;
+  const browser = await chromium.launch({ executablePath: process.env.CHROME || "/opt/pw-browsers/chromium", proxy });
   let fails = 0, checked = 0, axeRuns = 0;
   const report = [];
   for (const scheme of schemes) for (const [w, h] of WIDTHS) {
