@@ -1,0 +1,8 @@
+# Source and tooling stay out of the deployment; only the generated site and /api ship.
+_dev/
+tools/
+*.py
+*.md
+!README.md
+node_modules/
+.git/
