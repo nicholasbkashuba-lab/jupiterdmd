@@ -26,7 +26,7 @@ Build switches are environment variables, read at build time: `GA4_ID`, `VERCEL_
 
 | What | Where | Notes |
 |---|---|---|
-| Hero video | `assets/video/inlet-{1080,720}.mp4`, `inlet-1080.webm` (AV1) | Jupiter Inlet sunset drone footage (Design of Man). Seamless 17.4 s loop. Rebuild with `tools/encode_hero.sh <source.mp4>`. Phones, reduced motion and Save-Data get the poster only. |
+| Hero video | `assets/video/inlet-{1080,720}.mp4`, `inlet-1080.webm` (AV1) | Jupiter Inlet sunset drone footage (Design of Man). Seamless 17.4 s loop. Phones get `inlet-portrait.{webm,mp4}` (3:4 crop framed like the phone poster, 1.6/1.9 MB). Rebuild with `tools/encode_hero.sh <source.mp4>`. Reduced motion, Save-Data and 2G get the poster only; video always starts after load, so the poster stays the LCP. |
 | Hero posters | `assets/img/hero/` | Frame one of the loop. Portrait crop for phones. |
 | Photo strip | `assets/img/strip/` + `manifest.json` | Stills from the same footage. **Swap for the practice's own photos** when they arrive: drop files in, update the manifest. |
 | Share cards | `assets/img/og/` | Rendered by `tools/og.js` from `tools/og-cards.json` (written by the build). |

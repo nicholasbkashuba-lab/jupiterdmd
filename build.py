@@ -596,7 +596,7 @@ def build_home():
       <img src="/assets/img/hero/inlet-poster-1920.jpg" srcset="/assets/img/hero/inlet-poster-1280.jpg 1280w, /assets/img/hero/inlet-poster-1920.jpg 1920w" sizes="100vw" alt="" width="1920" height="1080" fetchpriority="low">
     </picture>
     <video class="hero-video" muted loop playsinline preload="none" disablepictureinpicture
-      data-src-1080="%s" data-src-720="%s" data-src-av1="%s"></video>
+      data-src-1080="%s" data-src-720="%s" data-src-av1="%s" data-src-portrait="%s" data-src-portrait-av1="%s"></video>
     <div class="hero-scrim"></div>
   </div>
   <div class="wrap hero-in">
@@ -757,6 +757,7 @@ def build_home():
 </section>
 %s""" % (
         A("/assets/video/inlet-1080.mp4"), A("/assets/video/inlet-720.mp4"), A("/assets/video/inlet-1080.webm"),
+        A("/assets/video/inlet-portrait.mp4"), A("/assets/video/inlet-portrait.webm"),
         tel('%s Call %s' % (icon("phone"), P["phone"]), "btn btn-sun btn-lg", "call-hero"), icon("arrow"),
         icon("pin"), "654 W. Indiantown Rd.", icon("clock"), icon("shield"),
         icon("pause"), icon("play"),

@@ -10,6 +10,8 @@
 #   assets/video/inlet-1080.mp4   H.264 High 1920x1080  <= 5.0 MB
 #   assets/video/inlet-720.mp4    H.264 High 1280x720   <= 2.5 MB
 #   assets/video/inlet-1080.webm  AV1 (SVT-AV1) 1920x1080 <= 4.0 MB
+#   assets/video/inlet-portrait.mp4   H.264 High 720x960 (3:4 crop, same window as the phone poster) <= 2.0 MB
+#   assets/video/inlet-portrait.webm  AV1 720x960 <= 1.6 MB
 #   assets/img/hero/inlet-poster-{1920,1280}.{avif,webp,jpg}
 #   assets/img/hero/inlet-poster-portrait-{720,1080}.{avif,webp,jpg}
 #   assets/img/strip/<slug>-{480,960}.{avif,webp,jpg} + manifest.json
@@ -59,11 +61,11 @@ fi
 SCALE="flags=lanczos:in_color_matrix=bt709:out_color_matrix=bt709"
 enc () { # $1 kind $2 w $3 h $4 crf $5 out
   if [ "$1" = x264 ]; then
-    $FF -i "$WORK/master.mkv" -an -vf "scale=$2:$3:$SCALE,format=yuv420p" \
+    $FF -i "$WORK/master.mkv" -an -vf "${PRE:+$PRE,}scale=$2:$3:$SCALE,format=yuv420p" \
       -c:v libx264 -preset veryslow -profile:v high -crf "$4" -g 48 -keyint_min 48 -sc_threshold 0 \
       -pix_fmt yuv420p $TAGS -movflags +faststart "$5"
   else
-    $FF -i "$WORK/master.mkv" -an -vf "scale=$2:$3:$SCALE,format=yuv420p" \
+    $FF -i "$WORK/master.mkv" -an -vf "${PRE:+$PRE,}scale=$2:$3:$SCALE,format=yuv420p" \
       -c:v libsvtav1 -preset 4 -crf "$4" -g 48 -svtav1-params tune=0 \
       -pix_fmt yuv420p $TAGS "$5"
   fi
@@ -99,6 +101,13 @@ fit x264 1920 1080 "$VID/inlet-1080.mp4"  5000000 ${CRF1080:-31}
 fit x264 1280 720  "$VID/inlet-720.mp4"   2500000 ${CRF720:-30.5}
 fit av1  1920 1080 "$VID/inlet-1080.webm" 4000000 ${CRFAV1:-46}
 fi
+# Phones: a 3:4 portrait window on the inlet mouth (x=1160, same as the portrait poster) so the
+# video fades in over its own first frame without the framing jumping.
+if [ -z "${SKIP_VIDEO:-}" ] || [ -n "${PORTRAIT_ONLY:-}" ]; then
+PRE="crop=1080:1440:${PORTRAIT_X:-1160}:0" fit x264 720 960 "$VID/inlet-portrait.mp4"  2000000 ${CRFPM:-28}
+PRE="crop=1080:1440:${PORTRAIT_X:-1160}:0" fit av1  720 960 "$VID/inlet-portrait.webm" 1600000 ${CRFPA:-44}
+fi
+[ -n "${PORTRAIT_ONLY:-}" ] && exit 0
 
 # ---------------------------------------------------------------- 3. frame one of the loop -> RGB PNG
 YUV2RGB="scale=in_color_matrix=bt709:in_range=tv:out_range=pc:flags=lanczos+accurate_rnd+full_chroma_int,format=rgb24"

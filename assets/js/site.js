@@ -82,19 +82,20 @@
     });
   });
 
-  /* Hero video. The poster is the LCP image; the video streams in after load, only on
-     wider screens, never under reduced motion or Save-Data. */
+  /* Hero video. The poster paints first; the video streams in after load and idle. Phones get a
+     3:4 portrait cut framed like the phone poster. Never under reduced motion, Save-Data or 2G. */
   var hero = $(".hero"), video = $(".hero-video"), toggle = $("[data-video-toggle]");
   function canPlayVideo() {
     var c = navigator.connection || {};
-    if (reduce.matches || c.saveData || /(^|-)2g$/.test(c.effectiveType || "")) return false;
-    return window.matchMedia("(min-width: 768px)").matches;
+    return !(reduce.matches || c.saveData || /(^|-)2g$/.test(c.effectiveType || ""));
   }
   // data-src-1080 / -720 have no camelCase dataset key (a dash before a digit isn't converted), so read attributes.
   var srcAttr = function (n) { return video.getAttribute("data-src-" + n) || ""; };
+  var narrow = function () { return window.matchMedia("(max-width: 767px)").matches; };
   function pickSource() {
     var px = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
     var av1 = video.canPlayType('video/webm; codecs="av01.0.08M.08"');
+    if (narrow()) return av1 === "probably" ? srcAttr("portrait-av1") : srcAttr("portrait");
     if (av1 === "probably" && px >= 1280 && srcAttr("av1").indexOf("pending") < 0) return srcAttr("av1");
     return px >= 1500 ? srcAttr("1080") : srcAttr("720");
   }
@@ -108,7 +109,7 @@
     var fallback = function () {
       if (fellBack || video.src.indexOf(".webm") < 0) return;
       fellBack = true;
-      video.src = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) >= 1500 ? srcAttr("1080") : srcAttr("720");
+      video.src = narrow() ? srcAttr("portrait") : window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) >= 1500 ? srcAttr("1080") : srcAttr("720");
       var p2 = video.play();
       if (p2 && p2.catch) p2.catch(function () {});
     };
