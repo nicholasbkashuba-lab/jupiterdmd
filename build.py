@@ -597,7 +597,6 @@ def build_home():
     </picture>
     <video class="hero-video" muted loop playsinline preload="none" disablepictureinpicture
       data-src-1080="%s" data-src-720="%s" data-src-av1="%s" data-src-portrait="%s" data-src-portrait-av1="%s"></video>
-    <div class="hero-scrim"></div>
   </div>
   <div class="wrap hero-in">
     <h1 id="hero-h" class="hero-h">

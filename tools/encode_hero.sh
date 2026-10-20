@@ -29,7 +29,7 @@ mkdir -p "$VID" "$HERO" "$STRIP"
 FF="ffmpeg -hide_banner -loglevel error -y"
 FPS="24000/1001"
 XF=24                      # crossfade length in frames (24 frames = 1.001 s)
-GRADE="eq=saturation=1.05" # very light grade: a touch of saturation, no contrast/gamma change
+GRADE="${GRADE:-null}"     # no grade: the footage as shot (ffmpeg "null" passes frames through untouched)
 TAGS="-colorspace bt709 -color_primaries bt709 -color_trc bt709 -color_range tv"
 
 # ---------------------------------------------------------------- 1. seamless loop master
