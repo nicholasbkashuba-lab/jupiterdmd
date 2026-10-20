@@ -90,20 +90,33 @@
     if (reduce.matches || c.saveData || /(^|-)2g$/.test(c.effectiveType || "")) return false;
     return window.matchMedia("(min-width: 768px)").matches;
   }
+  // data-src-1080 / -720 have no camelCase dataset key (a dash before a digit isn't converted), so read attributes.
+  var srcAttr = function (n) { return video.getAttribute("data-src-" + n) || ""; };
   function pickSource() {
     var px = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
     var av1 = video.canPlayType('video/webm; codecs="av01.0.08M.08"');
-    if (av1 === "probably" && px >= 1280 && video.dataset.srcAv1.indexOf("pending") < 0) return video.dataset.srcAv1;
-    return px >= 1500 ? video.dataset.src1080 : video.dataset.src720;
+    if (av1 === "probably" && px >= 1280 && srcAttr("av1").indexOf("pending") < 0) return srcAttr("av1");
+    return px >= 1500 ? srcAttr("1080") : srcAttr("720");
   }
   function startVideo() {
     if (!video || !canPlayVideo()) return;
     var src = pickSource();
     if (!src || src.indexOf("pending") >= 0) return;
+    // If the AV1 file can't be fetched or decoded (a browser can claim support and still fail),
+    // drop to H.264, which every browser plays.
+    var fellBack = false;
+    var fallback = function () {
+      if (fellBack || video.src.indexOf(".webm") < 0) return;
+      fellBack = true;
+      video.src = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) >= 1500 ? srcAttr("1080") : srcAttr("720");
+      var p2 = video.play();
+      if (p2 && p2.catch) p2.catch(function () {});
+    };
+    video.addEventListener("error", fallback);
     video.src = src;
     video.addEventListener("playing", function () { hero.classList.add("video-live"); if (toggle) toggle.hidden = false; }, { once: true });
     var p = video.play();
-    if (p && p.catch) p.catch(function () {});
+    if (p && p.catch) p.catch(function (err) { if (err && err.name === "NotSupportedError") fallback(); });
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (en) {
         if (toggle && toggle.getAttribute("aria-pressed") === "true") return;
