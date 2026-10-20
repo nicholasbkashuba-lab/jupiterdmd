@@ -184,6 +184,44 @@
     Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) tocIO.observe(el); });
   }
 
+  /* FAQ page: filter questions as you type, hide empty topics, keep the topic counts honest. */
+  var faqInput = $("[data-faq-search]");
+  if (faqInput) {
+    var cats = $$("[data-faq-cat]"), empty = $("[data-faq-empty]"), count = $("[data-faq-count]");
+    var norm = function (t) { return t.toLowerCase().replace(/\s+/g, " "); };
+    var runFilter = function () {
+      var q = norm(faqInput.value.trim()), shown = 0;
+      cats.forEach(function (cat) {
+        var n = 0;
+        $$("[data-qa]", cat).forEach(function (qa) {
+          var hit = !q || norm(qa.textContent).indexOf(q) >= 0;
+          qa.hidden = !hit;
+          if (hit) { n++; if (q) qa.open = true; }
+          else qa.open = false;
+        });
+        cat.hidden = n === 0;
+        var chip = $('.faq-chips a[href="#' + cat.id + '"]');
+        if (chip) { chip.parentNode.hidden = n === 0; $("span", chip).textContent = n; }
+        shown += n;
+      });
+      if (!q) $$("[data-qa]").forEach(function (qa) { qa.open = false; });
+      empty.hidden = shown > 0;
+      count.textContent = q ? shown + (shown === 1 ? " question matches" : " questions match") : "";
+    };
+    faqInput.addEventListener("input", runFilter);
+    if ("IntersectionObserver" in window) {
+      var chipFor = function (id) { return $('.faq-chips a[href="#' + id + '"]'); };
+      var faqIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          $$(".faq-chips a").forEach(function (a) { a.classList.remove("active"); });
+          var c = chipFor(en.target.id); if (c) c.classList.add("active");
+        });
+      }, { rootMargin: "-25% 0px -65% 0px" });
+      cats.forEach(function (c) { faqIO.observe(c); });
+    }
+  }
+
   /* Live Google reviews: rendered only when /api/reviews has data (GOOGLE_PLACES_API_KEY set). */
   var slots = $$("[data-greviews]");
   if (slots.length && window.fetch) {

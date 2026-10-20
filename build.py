@@ -23,8 +23,8 @@ import os
 import re
 import subprocess
 
-from site_data import (AREAS, CONFIRM_EDUCATION, CONFIRM_LANGUAGES, FAQS, GROUPS,
-                       HOME_FAQ_COUNT, HOURS, HOURS_NOTES, INTENTS, NEARBY, PRACTICE,
+from site_data import (AREAS, CONFIRM_EDUCATION, CONFIRM_LANGUAGES, FAQS, FAQ_CATEGORIES, GROUPS,
+                       HOME_FAQ_PICK, HOURS, HOURS_NOTES, INTENTS, NEARBY, PRACTICE,
                        SERVICES, TESTIMONIALS)
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -521,7 +521,7 @@ def page_hero(crumbs, lead, h1, lede, actions=True, aside=""):
 </section>""" % (" has-aside" if aside else "", crumbs_html(crumbs), esc(lead), h1, lede, acts, aside)
 
 
-def faq_block(faqs, heading="Questions patients ask", hid="faq-h", intro=""):
+def faq_block(faqs, heading="Questions patients ask", hid="faq-h", intro="", more=False):
     items = "".join(
         '<details class="qa rv"><summary><span>%s</span>%s</summary><div class="qa-a"><p>%s</p></div></details>'
         % (esc(q), icon("chev", "ic qa-ic"), esc(a)) for q, a in faqs)
@@ -533,11 +533,14 @@ def faq_block(faqs, heading="Questions patients ask", hid="faq-h", intro=""):
       <h2 id="%s" class="display-sm">%s</h2>
       %s
       <p class="faq-call">Still wondering? %s</p>
+      %s
     </div>
     <div class="qa-list">%s</div>
   </div>
 </section>""" % (hid, hid, heading, ('<p class="muted">%s</p>' % intro) if intro else "",
-                 tel("Call %s" % P["phone"], "link-strong"), items)
+                 tel("Call %s" % P["phone"], "link-strong"),
+                 ('<a class="btn btn-primary faq-more" href="/faq/">All %d questions %s</a>' % (len(all_faqs()), icon("arrow"))) if more else "",
+                 items)
 
 
 def testimonial_cards(items, cls="quotes"):
@@ -565,12 +568,6 @@ def build_home():
         '<a class="intent rv" style="--i:%d" href="/services/%s/"><span class="intent-n">%02d</span>'
         '<span class="intent-t">%s</span><span class="intent-d">%s</span><span class="intent-go">%s</span></a>'
         % (i % 3, slug, i + 1, esc(t), esc(d), icon("arrow")) for i, (t, d, slug) in enumerate(INTENTS))
-    groups_html = ""
-    for gi, (gkey, glabel, gname) in enumerate(GROUPS):
-        items = "".join('<li><a href="/services/%s/"><span>%s</span>%s</a></li>' % (s["slug"], esc(s["name"]), icon("arrow"))
-                        for s in SERVICES if s["group"] == gkey)
-        groups_html += ('<div class="svc-group rv" style="--i:%d"><p class="svc-k">%s</p><h3>%s</h3><ul>%s</ul></div>'
-                        % (gi % 3, esc(gname), esc(glabel), items))
     strip = strip_manifest()
     def strip_li(m, dup):
         return '<li class="strip-item" style="--ar:%d/%d"%s>%s</li>' % (
@@ -582,8 +579,7 @@ def build_home():
     statement = ("Our philosophy is to treat the whole person, with a special focus on how your teeth and gums "
                  "relate to your total body health.")
     words = " ".join('<span class="w">%s</span>' % esc(w) for w in statement.split())
-    nearby = "".join('<li><span>%s</span><span>%s mi &middot; ~%d min</span></li>' % (n, m, t) for n, m, t in NEARBY[:4])
-    home_faqs = FAQS[:HOME_FAQ_COUNT]
+    home_faqs = [FAQS[i] for i in HOME_FAQ_PICK]
     body = """
 <section class="hero" aria-labelledby="hero-h">
   <div class="hero-media" aria-hidden="true">
@@ -631,6 +627,11 @@ def build_home():
       <p class="sec-lede">Pick the closest match. Each page explains what the visit involves, what it can and can't do, and what to ask.</p>
     </div>
     <div class="intent-grid">%s</div>
+    <ul class="intent-more rv">
+      <li><a class="link-arrow" href="/services/">All 14 services %s</a></li>
+      <li><a class="link-arrow" href="/insurance-financing/">Insurance &amp; financing %s</a></li>
+      <li><a class="link-arrow" href="/new-patients/">Your first visit %s</a></li>
+    </ul>
   </div>
 </section>
 
@@ -666,48 +667,6 @@ def build_home():
   </div>
 </section>
 
-<section class="section steps-sec" aria-labelledby="steps-h">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <p class="eyebrow">How it works</p>
-      <h2 id="steps-h" class="display">Your first visit, step by step.</h2>
-    </div>
-    <ol class="steps">
-      <li class="step rv"><span class="step-n">1</span><h3>Call the office</h3><p>Ring %s. The team takes your details and insurance information and finds a time that suits you.</p></li>
-      <li class="step rv" style="--i:1"><span class="step-n">2</span><h3>Get to know each other</h3><p>Your first visit covers your medical and dental history, an exam and digital X-rays, and time to talk about any concerns.</p></li>
-      <li class="step rv" style="--i:2"><span class="step-n">3</span><h3>A plan you understand</h3><p>Dr. Forte explains what he found and your options. The office files your insurance and walks you through payment choices.</p></li>
-    </ol>
-  </div>
-</section>
-
-<section class="section svc-sec" aria-labelledby="svc-h">
-  <div class="wrap svc-layout">
-    <div class="svc-intro rv">
-      <p class="eyebrow">Services</p>
-      <h2 id="svc-h" class="display">All of your routine dental needs, in one place.</h2>
-      <p>From regular cleanings and exams to advanced restorative treatment, the practice handles it under one roof, so your history, X-rays and plan stay together.</p>
-      <a class="btn btn-primary" href="/services/">See every service %s</a>
-    </div>
-    <div class="svc-groups">%s</div>
-  </div>
-</section>
-
-<section class="section money" aria-labelledby="money-h">
-  <div class="wrap money-grid">
-    <div class="rv">
-      <p class="eyebrow">Insurance &amp; payment</p>
-      <h2 id="money-h" class="display-sm">Straight answers about cost.</h2>
-      <p>The practice accepts most traditional insurance plans and files your claims for you. It does not take part in HMO plans, but if your plan lets you choose your own dentist, the office will file for your reimbursement.</p>
-      <a class="link-arrow" href="/insurance-financing/">Insurance &amp; financing %s</a>
-    </div>
-    <ul class="money-list">
-      <li class="rv">%s<div><h3>Claims filed for you</h3><p>Bring your card; the office handles the paperwork.</p></div></li>
-      <li class="rv" style="--i:1">%s<div><h3>CareCredit financing</h3><p>For treatment your insurance doesn&rsquo;t cover.</p></div></li>
-      <li class="rv" style="--i:2">%s<div><h3>Flexible payment plan</h3><p>Ask the Financial Coordinator how it works.</p></div></li>
-    </ul>
-  </div>
-</section>
-
 <section class="section reviews-sec" aria-labelledby="rev-h">
   <div class="wrap">
     <div class="sec-head rv">
@@ -718,26 +677,6 @@ def build_home():
     %s
     %s
     <a class="btn btn-ghost-light" href="/reviews/">Read all reviews %s</a>
-  </div>
-</section>
-
-<section class="section visit" aria-labelledby="visit-h">
-  <div class="wrap visit-grid">
-    <div class="rv">
-      <p class="eyebrow">Find us</p>
-      <h2 id="visit-h" class="display-sm">654 W. Indiantown Road, Suite 105</h2>
-      <p>On Indiantown Road in Jupiter, a short way east of Military Trail and about a mile from Alternate A1A and US-1.</p>
-      <ul class="nearby">%s</ul>
-      <p class="fine">Drive times are routing estimates outside rush hour.</p>
-      <div class="visit-actions">
-        <a class="btn btn-primary" href="%s" target="_blank" rel="noopener">%s Get directions<span class="sr"> (opens Google Maps in a new tab)</span></a>
-        %s
-      </div>
-    </div>
-    <figure class="route-map rv" style="--i:1">
-      %s
-      <figcaption>Not to scale. Distances measured along Indiantown Road.</figcaption>
-    </figure>
   </div>
 </section>
 
@@ -761,14 +700,11 @@ def build_home():
         icon("pin"), "654 W. Indiantown Rd.", icon("clock"), icon("shield"),
         icon("pause"), icon("play"),
         services_marquee * 2,
-        intents,
+        intents, icon("arrow"), icon("arrow"), icon("arrow"),
         words,
         P["license_verify_url"], P["npi"], icon("arrow"),
-        tel(), icon("arrow"), groups_html, icon("arrow"),
-        icon("shield"), icon("card"), icon("calendar"),
         testimonial_cards(TESTIMONIALS[:3], "quotes quotes-3"), live_reviews_slot(), icon("arrow"),
-        nearby, P["maps_url"], icon("map"), tel("Call %s" % P["phone"], "btn btn-quiet"), route_svg(),
-        faq_block(home_faqs, "Quick answers", "home-faq-h"),
+        faq_block(home_faqs, "Quick answers", "home-faq-h", more=True),
         icon("pause"), icon("play"), strip_items,
         cta_band())
     schema = [webpage_node(path, title, desc, about={"@id": ORG_ID}, extra={
@@ -1072,21 +1008,70 @@ def build_reviews():
     page(path, title, desc, body, schema, crumbs, og="/assets/img/og/og-reviews.jpg")
 
 
+def faq_groups():
+    """Every Q&A on the site, grouped: [(key, label, intro, [(q, a, service_or_None)])]. One source for
+    the FAQ page, its FAQPage schema and the homepage count, so they can't disagree."""
+    out, seen = [], set()
+    for key, label, intro, general_idx, service_slugs in FAQ_CATEGORIES:
+        items = [(FAQS[i][0], FAQS[i][1], None) for i in general_idx]
+        for slug in service_slugs:
+            items += [(q, a, SVC[slug]) for q, a in SVC[slug]["faqs"]]
+        fresh = []
+        for it in items:
+            if it[0] not in seen:
+                seen.add(it[0])
+                fresh.append(it)
+        out.append((key, label, intro, fresh))
+    return out
+
+
+def all_faqs():
+    return [qa for _, _, _, items in faq_groups() for qa in items]
+
+
 def build_faq():
     path = "/faq/"
-    title = "Dental FAQ | Insurance, Hours & Visits | Angelo Forte, DMD"
-    desc = ("Answers about insurance, payment, office hours, first visits, children's care and emergencies at "
-            "Angelo Forte, DMD, a dentist on W. Indiantown Rd. in Jupiter, FL.")
+    title = "Dental FAQ | Insurance, Treatments & Visits | Dr. Forte"
+    desc = ("Answers to %d questions about insurance, first visits, emergencies, implants, crowns, whitening, "
+            "Invisalign, root canals and more at Angelo Forte, DMD in Jupiter, FL." % len(all_faqs()))
     crumbs = [("Home", "/"), ("FAQ", "/faq/")]
-    body = page_hero(crumbs, "Frequently asked questions", "Good questions, straight answers.",
-                     "The things patients ask the front desk most often. Treatment questions are answered on each service page.") + \
-        faq_block(FAQS, "Everything else", "faq-all-h") + """
-<section class="section tint" aria-labelledby="svcq-h"><div class="wrap">
-  <h2 id="svcq-h" class="display-sm rv">Questions about a treatment?</h2>
-  <ul class="related-list">%s</ul></div></section>%s""" % (
-        "".join('<li><a href="/services/%s/"><span>%s</span><small>%d questions answered</small>%s</a></li>'
-                % (s["slug"], esc(s["name"]), len(s["faqs"]), icon("arrow")) for s in SERVICES), cta_band())
-    schema = [webpage_node(path, title, desc, about={"@id": ORG_ID}), faq_node(BASE + path, FAQS)]
+    groups = faq_groups()
+    chips = "".join('<li><a href="#%s">%s <span>%d</span></a></li>' % (k, esc(l), len(items)) for k, l, _, items in groups)
+    sections = ""
+    for k, label, intro, items in groups:
+        qas = ""
+        for q, a, svc in items:
+            more = ('<p class="qa-more"><a class="link-arrow" href="/services/%s/">More on %s %s</a></p>'
+                    % (svc["slug"], esc(svc["name"].lower() if svc["slug"] not in ("invisalign",) else svc["name"]), icon("arrow"))) if svc else ""
+            qas += ('<details class="qa" data-qa><summary><span>%s</span>%s</summary><div class="qa-a"><p>%s</p>%s</div></details>'
+                    % (esc(q), icon("chev", "ic qa-ic"), esc(a), more))
+        sections += ('<section class="faq-cat" id="%s" aria-labelledby="%s-h" data-faq-cat><div class="faq-cat-head">'
+                     '<h2 id="%s-h" class="display-sm">%s</h2><p class="muted">%s</p></div><div class="qa-list">%s</div></section>'
+                     % (k, k, k, esc(label), esc(intro), qas))
+    body = page_hero(crumbs, "Frequently asked questions", "%d questions, straight answers." % len(all_faqs()),
+                     "Search below, or jump to a topic. If your question isn't here, the front desk will answer it on the phone.") + """
+<div class="section faq-page">
+  <div class="wrap faq-layout">
+    <aside class="faq-side">
+      <div class="faq-search">
+        <label for="faq-q">Search the questions</label>
+        <input id="faq-q" type="search" placeholder="Try &ldquo;insurance&rdquo; or &ldquo;crown&rdquo;" autocomplete="off" data-faq-search>
+        <p class="faq-count" data-faq-count aria-live="polite"></p>
+      </div>
+      <nav aria-label="FAQ topics"><ul class="faq-chips">%s</ul></nav>
+    </aside>
+    <div class="faq-main">
+      %s
+      <div class="faq-empty" data-faq-empty hidden>
+        <h2 class="display-sm">No matching questions</h2>
+        <p>Try a different word, or call %s and ask the front desk.</p>
+      </div>
+    </div>
+  </div>
+</div>
+%s""" % (chips, sections, tel(), cta_band())
+    schema = [webpage_node(path, title, desc, about={"@id": ORG_ID}),
+              faq_node(BASE + path, [(q, a) for q, a, _ in all_faqs()])]
     page(path, title, desc, body, schema, crumbs, og="/assets/img/og/og-faq.jpg")
 
 

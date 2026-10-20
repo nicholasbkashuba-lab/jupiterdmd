@@ -615,3 +615,31 @@ body.nav-locked .site-header { color: var(--text) !important; }
   .hero { min-height: 0; color: #000; background: none; }
   body { background: #fff; color: #000; }
 }
+
+/* Homepage: links under the intent cards replace the old services, steps and insurance sections. */
+.intent-more { display: flex; flex-wrap: wrap; gap: 12px 32px; margin-top: 28px; }
+.faq-more { margin-top: 22px; }
+
+/* FAQ page: sticky search + topic list, categorised questions. */
+.faq-layout { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: clamp(32px, 6vw, 88px); align-items: start; }
+.faq-side { position: sticky; top: calc(var(--hd-h) + 24px); display: grid; gap: 24px; }
+.faq-search label { display: block; font-weight: 600; font-size: .92rem; margin-bottom: 8px; }
+.faq-search input { width: 100%; min-height: 48px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font: inherit; }
+.faq-search input:focus { outline: 3px solid var(--sun); outline-offset: 1px; }
+.faq-count { margin: 8px 0 0; font-size: .85rem; color: var(--muted); min-height: 1.2em; }
+.faq-chips { display: grid; gap: 2px; border-left: 1px solid var(--line); }
+.faq-chips a { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0 8px 16px; margin-left: -1px; border-left: 2px solid transparent; color: var(--muted); text-decoration: none; font-size: .95rem; }
+.faq-chips a span { font-variant-numeric: tabular-nums; }
+.faq-chips a:hover, .faq-chips a.active { color: var(--text); border-left-color: var(--sun); }
+.faq-cat + .faq-cat { margin-top: clamp(48px, 6vw, 80px); }
+.faq-cat { scroll-margin-top: calc(var(--hd-h) + 24px); }
+.faq-cat-head { margin-bottom: 18px; }
+.faq-cat-head p { margin: 8px 0 0; }
+.qa-more { margin-top: 12px; }
+.faq-empty { padding: 32px; border-radius: var(--r); background: var(--tint); }
+@media (max-width: 900px) {
+  .faq-layout { grid-template-columns: 1fr; }
+  .faq-side { position: static; }
+  .faq-chips { display: flex; flex-wrap: wrap; gap: 8px; border: 0; }
+  .faq-chips a { padding: 8px 14px; margin: 0; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); min-height: 44px; align-items: center; }
+}

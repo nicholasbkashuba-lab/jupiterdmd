@@ -524,7 +524,21 @@ FAQS = [
     ("If I can't make my appointment, what should I do?", "Call the office as soon as you can if you need to cancel or will be running late, so the time can be offered to someone else."),
 ]
 
-HOME_FAQ_COUNT = 6
+# Homepage shows these five (indexes into FAQS); the full set lives on /faq/.
+HOME_FAQ_PICK = [0, 3, 5, 2, 8]
+
+# /faq/ topics: (anchor, heading, one-line intro, general FAQ indexes, service slugs whose FAQs join it).
+# Every general FAQ and every service FAQ appears exactly once.
+FAQ_CATEGORIES = [
+    ("visits", "Appointments & first visits", "Booking, hours, what to bring and where to find the office.", [0, 1, 2, 7, 11], []),
+    ("insurance", "Insurance & payment", "Plans, out-of-network claims, payment options and financing.", [3, 4, 5], []),
+    ("emergencies", "Dental emergencies", "Toothaches, broken and knocked-out teeth, and when to go to the ER.", [8], ["emergency-dentist"]),
+    ("preventive", "Cleanings, exams & gum health", "Check-ups, X-rays, oral cancer screening, sealants and gum disease.", [6, 10], ["exams-cleanings", "gum-disease-treatment"]),
+    ("repairs", "Fillings, crowns & root canals", "Fixing cavities, cracked teeth and infected teeth.", [], ["fillings", "crowns-bridges", "root-canal"]),
+    ("cosmetic", "Whitening, veneers & Invisalign", "Brightening, reshaping and straightening your smile.", [9], ["teeth-whitening", "porcelain-veneers", "dental-bonding", "invisalign"]),
+    ("replacement", "Implants, dentures & extractions", "Replacing missing teeth, and when a tooth has to come out.", [], ["dental-implants", "dentures", "tooth-extraction"]),
+    ("jaw", "TMJ & jaw pain", "Clicking, aching jaws and teeth grinding.", [], ["tmj-treatment"]),
+]
 
 # --- Areas served ---------------------------------------------------------------
 # Distances and routes: OSRM routing over OpenStreetMap from each town's center to
